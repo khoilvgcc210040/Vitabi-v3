@@ -80,4 +80,15 @@
   width: 100%;
   border-top: 1px solid #ddd;
 }
+.form-item {
+  margin-bottom: 1rem; 
+  position: relative;
+}
+
+.form-item .form-message {
+  min-height: 1.5rem; 
+  color: red; 
+  font-size: 0.875rem; /
+ 
+}
 
