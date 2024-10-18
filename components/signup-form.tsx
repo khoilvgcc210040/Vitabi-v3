@@ -44,7 +44,7 @@ export const SignupForm = () => {
             headerLabel="Register (1/3)"
             backButtonLabel="←"
             backButtonHref="/" // Đường dẫn khi bấm back
-            showSocial={false} // Không cần phần mạng xã hội
+           
         >
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
