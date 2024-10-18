@@ -19,9 +19,9 @@ export const CardWrapper = ({
   return (
     <div className="flex justify-center items-start bg-white">
       {/* Card Container */}
-      <div className="flex flex-col border-t border-l border-r p-6 max-w-md w-full bg-white" style={{ height: '695px' }}>
+      <div className="flex flex-col border max-w-md w-full bg-white min-h-[720px] sm:min-h-[695px] flex-grow" style={{ border: '2px solid #999' }}>
         {/* Header */}
-        <div className="flex justify-between items-center mb-4 border-b border-gray-400 pb-4">
+        <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-6" style={{ borderBottom: '2px solid #999' }}>
           <Link href={backButtonHref} className="text-xl">
             {backButtonLabel}
           </Link>
@@ -35,18 +35,17 @@ export const CardWrapper = ({
         </div>
 
         {/* Card */}
-        <div className="flex-grow">
-          <Card className="w-full">
-            <CardContent>{children}</CardContent>
-          </Card>
-        </div>
+        <Card className="w-full">
+          <CardContent>{children}</CardContent>
+        </Card>
 
-        {/* Footer luôn nằm trong khung */}
-        <footer className="flex justify-around w-full bg-gray-100 py-4 mt-4 rounded-lg">
+        {/* Footer nằm trong khung */}
+        <footer className="flex justify-around w-full bg-gray-100 py-4 mt-2 rounded-lg">
           <Link href="/" className="text-sm">Home</Link>
           <Link href="/bookings" className="text-sm">Bookings</Link>
           <Link href="/mydata" className="text-sm">My Data</Link>
         </footer>
+
       </div>
     </div>
   );
