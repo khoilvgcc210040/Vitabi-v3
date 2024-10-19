@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { CardWrapper } from "./card-wrapper";
+import { CardWrapper } from "@/components/card-wrapper";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -50,6 +50,13 @@ export const SignupForm = () => {
       backButtonLabel="←"
       backButtonHref="/" // Đường dẫn khi bấm back
     >
+       <div className="flex justify-center mt-2 mb-6">
+              <img
+                src="/images/logo.png"
+                alt="avatar"
+                className="w-20 h-20 object-contain"
+              />
+            </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">

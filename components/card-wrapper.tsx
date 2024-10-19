@@ -40,13 +40,6 @@ export const CardWrapper = ({
 
         <Card className="w-full ">
         <CardContent style={{ maxHeight: '500px', overflowY: 'scroll', msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
-            <div className="flex justify-center mt-2 mb-6">
-              <img
-                src="/images/logo.png"
-                alt="avatar"
-                className="w-20 h-20 object-contain"
-              />
-            </div>
             {children}
           </CardContent>
         </Card>
