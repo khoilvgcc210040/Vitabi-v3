@@ -22,31 +22,31 @@ export const CardWrapper = ({
       {/* Card Container */}
       <div
         className="flex flex-col border max-w-md w-full bg-white min-h-[720px] sm:min-h-[695px] flex-grow"
-        style={{ border: "2px solid #999" }}
+        style={{ border: "2px solid #d4d4d4" }}
       >
         {/* Header */}
         <div
-          className="flex justify-between items-center  border-b border-gray-400 p-6"
-          style={{ borderBottom: "2px solid #999" }}
+          className="flex justify-between items-center  border-b border-gray-400 p-4"
+          style={{ borderBottom: "2px solid #d4d4d4" }}
         >
-          <Link href={backButtonHref} className="text-xl">
-            {backButtonLabel}
+          <Link href={backButtonHref} className="text-xl" style={{ transform: 'rotate(180deg)' }}>
+          ➜
           </Link>
-          <h2 className="text-md font-semibold">{headerLabel}</h2>
-          <button className="text-xl">×</button>
+          <h2 className="text-lg font-semibold">{headerLabel}</h2>
+          <Link href="/auth/login" className="text-xl">✖</Link>
         </div>
 
         {/* Avatar Image */}
 
-        <Card className="w-full ">
-        <CardContent style={{ maxHeight: '500px', overflowY: 'scroll', msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+        <Card className="w-full">
+        <CardContent style={{ maxHeight: '520px', overflowY: 'scroll', msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
             {children}
           </CardContent>
         </Card>
 
         <footer
-          className="flex justify-around w-full py-4"
-          style={{ marginTop: "auto", borderTop: "2px solid #999" }}
+          className="flex justify-around w-full p-4"
+          style={{ marginTop: "auto", borderTop: "2px solid #d4d4d4" }}
         >
           <Link
             href="/"
