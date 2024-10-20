@@ -11,6 +11,7 @@ i18n.use(initReactI18next).init({
         "Email or password does not valid": "Email or password does not valid",
         "Register": "Register",
         "Don&apos;t have an account?": "Don't have an account?",
+        "Sign up": "Sign up",
       }
     },
     jp: {
@@ -21,6 +22,7 @@ i18n.use(initReactI18next).init({
         "Email or password does not valid": "メールまたはパスワードが無効です",
         "Register": "登録",
         "Don&apos;t have an account?": "アカウントをお持ちではありませんか？",
+        "Sign up": "登録",
       }
     },
     vi: {
@@ -31,6 +33,7 @@ i18n.use(initReactI18next).init({
         "Email or password does not valid": "Email hoặc mật khẩu không hợp lệ",
         "Register": "Đăng ký",
         "Don&apos;t have an account?": "Chưa có tài khoản?",
+        "Sign up": "Đăng ký",
       }
     },
   },
