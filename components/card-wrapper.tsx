@@ -5,10 +5,11 @@ import Link from "next/link";
 
 interface CardWrapperProps {
   children: React.ReactNode;
-  headerLabel: string;
-  backButtonLabel: string;
+  headerLabel: React.ReactNode;
+  backButtonLabel: React.ReactNode;
   backButtonHref: string;
   showSocial?: boolean;
+  showCloseButton?: boolean;
 }
 
 export const CardWrapper = ({
@@ -16,6 +17,7 @@ export const CardWrapper = ({
   headerLabel,
   backButtonLabel,
   backButtonHref,
+  showCloseButton = true,
 }: CardWrapperProps) => {
   return (
     <div className="flex justify-center items-start bg-white">

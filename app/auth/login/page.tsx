@@ -1,8 +1,8 @@
+import LoginForm from "@/components/login-form";
+
 const LoginPage = () => {
     return ( 
-        <div>
-            Login Nè!
-        </div>
+        <LoginForm/>
      );
 }
  
