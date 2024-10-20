@@ -5,10 +5,11 @@ import Link from "next/link";
 
 interface CardWrapperProps {
   children: React.ReactNode;
-  headerLabel: string;
-  backButtonLabel: string;
+  headerLabel: React.ReactNode;
+  backButtonLabel: React.ReactNode;
   backButtonHref: string;
   showSocial?: boolean;
+  showCloseButton?: boolean;
 }
 
 export const CardWrapper = ({
@@ -16,6 +17,7 @@ export const CardWrapper = ({
   headerLabel,
   backButtonLabel,
   backButtonHref,
+  showCloseButton = true,
 }: CardWrapperProps) => {
   return (
     <div className="flex justify-center items-start bg-white">
@@ -26,14 +28,16 @@ export const CardWrapper = ({
       >
         {/* Header */}
         <div
-          className="flex justify-between items-center  border-b border-gray-400 p-6"
+          className="flex justify-between items-center  border-b border-gray-400 p-4"
           style={{ borderBottom: "2px solid #999" }}
         >
           <Link href={backButtonHref} className="text-xl">
             {backButtonLabel}
           </Link>
           <h2 className="text-md font-semibold">{headerLabel}</h2>
-          <button className="text-xl">×</button>
+          {showCloseButton && (
+            <button className="text-xl">×</button>  // Chỉ hiển thị nút "×" nếu showCloseButton là true
+          )}
         </div>
 
         {/* Avatar Image */}
