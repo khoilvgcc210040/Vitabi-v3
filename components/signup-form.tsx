@@ -14,23 +14,19 @@ import {
 } from "@/components/ui/form";
 import { CardWrapper } from "@/components/card-wrapper";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import { useState } from "react";  // Import useState để quản lý loading
 
-// Validation schema for signup form
-const SignupSchema = z
-  .object({
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z
-      .string()
-      .min(6, "Password must be at least 6 characters"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"], // set the path of the error
-  });
+const SignupSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  confirmPassword: z.string().min(6, "Password must be at least 6 characters"),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+});
 
-export const SignupForm = () => {
+const SignupForm = () => {
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
@@ -40,37 +36,67 @@ export const SignupForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof SignupSchema>) => {
-    console.log(values);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);  // Tạo state quản lý loading
+
+  const onSubmit = async (values: z.infer<typeof SignupSchema>) => {
+    setLoading(true);  // Bật trạng thái loading khi bắt đầu gửi request
+
+    try {
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        if (errorData.message === 'Email already exists') {
+          form.setError('email', {
+            type: 'manual',
+            message: 'This email already exists',
+          });
+        } else {
+          alert(`Error: ${errorData.message}`);
+        }
+      } else {
+        router.push('/auth/signupverifyemail');
+      }
+    } catch (error) {
+      console.error('Error during form submission:', error);
+      alert('An unexpected error occurred');
+    } finally {
+      setLoading(false); 
+    }
   };
 
   return (
     <CardWrapper
       headerLabel="Register (1/3)"
       backButtonLabel="←"
-      backButtonHref="/" // Đường dẫn khi bấm back
+      backButtonHref="/" 
     >
-       <div className="flex justify-center mt-2 mb-6">
-              <img
-                src="/images/logo.png"
-                alt="avatar"
-                className="w-20 h-20 object-contain"
-              />
-            </div>
+      <div className="flex justify-center mt-8 mb-6">
+        <img src="/images/logo.png" alt="avatar" className="w-20 h-20 object-contain" />
+      </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pr-6 pl-6">
           <div className="space-y-4">
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel style={{ fontWeight: "600" }}>Email</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Email" type="email" />
+                    <Input style={{ width: "100%", height: "48px", fontSize: "16px", border: "1px solid #000" }} {...field} placeholder="Email" type="email" />
                   </FormControl>
-                  <FormMessage className="form-message" />{" "}
-                  {/* Thêm class 'form-message' để giữ khoảng cách cố định */}
+                  <FormMessage style={{ marginLeft: "3px", fontSize: "12px" }} />
                 </FormItem>
               )}
             />
@@ -79,11 +105,11 @@ export const SignupForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel style={{ fontWeight: "600" }}>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Password" type="password" />
+                    <Input style={{ width: "100%", height: "48px", fontSize: "16px", border: "1px solid #000" }} {...field} placeholder="Password" type="password" />
                   </FormControl>
-                  <FormMessage className="form-message" />
+                  <FormMessage style={{ marginLeft: "3px", fontSize: "12px" }} />
                 </FormItem>
               )}
             />
@@ -92,31 +118,29 @@ export const SignupForm = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Re-enter Password</FormLabel>
+                  <FormLabel style={{ fontWeight: "600" }}>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Re-enter Password"
-                      type="password"
-                    />
+                    <Input style={{ width: "100%", height: "48px", fontSize: "16px", border: "1px solid #000" }} {...field} placeholder="Confirm Password" type="password" />
                   </FormControl>
-                  <FormMessage className="form-message" />
+                  <FormMessage style={{ marginLeft: "3px", fontSize: "12px" }} />
                 </FormItem>
               )}
             />
           </div>
-          <Button type="submit" className="w-full bg-black text-white">
-            Next
+          <Button type="submit" className="bg-black text-white rounded-md" style={{ width: "100%", height: "48px", fontSize: "16px" }} disabled={loading}>
+            {loading ? (
+              <div className="flex items-center justify-center">
+                {/* Hiệu ứng loading (spinner) */}
+                <svg className="animate-spin h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 01-8 8v-8H4z"></path>
+                </svg>
+                Loading...
+              </div>
+            ) : (
+              'Next'
+            )}
           </Button>
-          <p className="text-center  mt-4">
-            Already have an account?{" "}
-            <Link
-              href="/auth/login"
-              className="text-gray-500 underline hover:text-blue-600"
-            >
-              Login
-            </Link>
-          </p>
         </form>
       </Form>
     </CardWrapper>
