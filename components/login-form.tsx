@@ -5,13 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "@/components/card-wrapper";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Sử dụng router để điều hướng
 import { useTranslation } from "react-i18next";
 import i18n from "@/lib/i18n"; // Import file i18n
 import "flag-icon-css/css/flag-icons.min.css"; // Import flag-icon-css
 
 export const LoginForm = () => {
   const [error, setError] = useState<string>(""); // State để lưu thông báo lỗi
+  const [loading, setLoading] = useState<boolean>(false); // State cho trạng thái loading
   const { t } = useTranslation();
+  const router = useRouter(); // Router để chuyển hướng sau khi login thành công
 
   const [language, setLanguage] = useState<string>("en");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -34,35 +37,66 @@ export const LoginForm = () => {
     }
   }, [language, error, t]); // Theo dõi ngôn ngữ và error
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // Hàm xử lý submit form đăng nhập
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
     const emailInput = emailRef.current?.value;
     const passwordInput = passwordRef.current?.value;
-  
+
     // Kiểm tra nếu email hoặc mật khẩu bị bỏ trống
     if (!emailInput || !passwordInput) {
       setError(t("Email or password does not valid")); // Hiển thị lỗi qua hệ thống dịch ngôn ngữ
-  
-      // Focus vào trường bị bỏ trống
-      if (!emailInput) {
-        emailRef.current?.focus();
-      } else if (!passwordInput) {
-        passwordRef.current?.focus();
-      }
-    } else if (!emailInput.includes("@")) {
+      if (!emailInput) emailRef.current?.focus(); // Focus vào trường bị bỏ trống
+      else passwordRef.current?.focus();
+      return;
+    }
+
+    // Kiểm tra định dạng email
+    if (!emailInput.includes("@")) {
       setError(t("Enter a valid email"));
       emailRef.current?.focus(); // Focus vào trường email khi lỗi định dạng
-    } else if (passwordInput.length < 6) {
+      return;
+    }
+
+    // Kiểm tra độ dài mật khẩu
+    if (passwordInput.length < 6) {
       setError(t("Password must be at least 6 characters"));
       passwordRef.current?.focus(); // Focus vào trường mật khẩu khi ngắn quá
-    } else {
-      setError(""); // Xóa lỗi nếu thông tin hợp lệ
-      // Xử lý đăng nhập tại đây
-      console.log("Login successful!");
+      return;
+    }
+
+    setError(""); // Xóa lỗi nếu thông tin hợp lệ
+    setLoading(true); // Bắt đầu trạng thái loading
+
+    try {
+      // Gửi yêu cầu đăng nhập tới API
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: emailInput,
+          password: passwordInput,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.message || t("An unexpected error occurred"));
+      } else {
+        // Đăng nhập thành công
+        setError("");
+        router.push("/dashboard"); // Chuyển hướng tới dashboard hoặc trang khác
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError(t("An unexpected error occurred"));
+    } finally {
+      setLoading(false); // Kết thúc trạng thái loading
     }
   };
-  
 
   return (
     <CardWrapper
@@ -130,7 +164,7 @@ export const LoginForm = () => {
         </div>
       }
       backButtonLabel={<img src="/images/logoVitabi.png" className="w-16 h-10" />}
-      backButtonHref="/"
+      backButtonHref="/" // Đường dẫn quay lại trang chủ hoặc trang trước
       showCloseButton={false}
     >
       <div className="flex flex-col items-center px-4">
@@ -141,12 +175,17 @@ export const LoginForm = () => {
             className="w-20 h-20 object-contain"
           />
         </div>
-        <h2 className="text-2xl font-semibold" style={{ marginBottom: "15px" }}>{t("Login")}</h2> 
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>} {/* Hiển thị lỗi */}
+
+        <h2 className="text-2xl font-semibold" style={{ marginBottom: "15px" }}>
+          {t("Login")}
+        </h2>
+
+        {/* Hiển thị thông báo lỗi nếu có */}
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
         <form onSubmit={handleSubmit} className="w-full space-y-6">
           <div className="space-y-4">
-            {/* Email */}
+            {/* Trường nhập email */}
             <div>
               <Input
                 name="email"
@@ -154,11 +193,10 @@ export const LoginForm = () => {
                 type="email"
                 placeholder={t("Enter email")}
                 className="w-full h-12"
-                
               />
             </div>
 
-            {/* Password */}
+            {/* Trường nhập mật khẩu */}
             <div>
               <Input
                 name="password"
@@ -170,21 +208,35 @@ export const LoginForm = () => {
             </div>
           </div>
 
+          {/* Nút đăng nhập, hiển thị trạng thái loading khi chờ phản hồi */}
           <Button
             type="submit"
             className="w-full bg-black text-white py-2 rounded-md h-12"
+            disabled={loading} // Vô hiệu hóa nút trong khi đang loading
           >
-            {t("Login")}
+            {loading ? (
+              <div className="flex items-center justify-center">
+                {/* Hiển thị hiệu ứng spinner khi đang xử lý */}
+                <svg className="animate-spin h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 01-8 8v-8H4z"></path>
+                </svg>
+                Logging in...
+              </div>
+            ) : (
+              'Login'
+            )}
           </Button>
         </form>
 
+        {/* Đường dẫn đến trang đăng ký nếu chưa có tài khoản */}
         <p className="text-center mt-4">
-          {t("Don&apos;t have an account?")}{" "}
+          {t("Don't have an account?")}{" "}
           <Link
             href="/auth/signup"
             className="text-gray-500 underline hover:text-blue-600"
           >
-            {t("Register")}
+            {t("Sign up")}
           </Link>
         </p>
       </div>
