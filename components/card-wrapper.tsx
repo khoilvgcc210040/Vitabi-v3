@@ -34,8 +34,12 @@ export const CardWrapper = ({
           <Link href={backButtonHref} className="text-xl" style={{ transform: 'rotate(180deg)' }}>
           ➜
           </Link>
-          <h2 className="text-lg font-semibold">{headerLabel}</h2>
-          <Link href="/auth/login" className="text-xl">✖</Link>
+          <h2 className="text-lg flex-grow text-center font-semibold">{headerLabel}</h2>
+          {showCloseButton && (
+            <Link href="/auth/login" className="text-xl">
+              ✖
+            </Link>
+          )}
         </div>
 
         {/* Avatar Image */}
