@@ -44,33 +44,32 @@ export const LoginForm = () => {
     const emailInput = emailRef.current?.value;
     const passwordInput = passwordRef.current?.value;
 
-    // Kiểm tra nếu email hoặc mật khẩu bị bỏ trống
+   
     if (!emailInput || !passwordInput) {
-      setError(t("Email or password does not valid")); // Hiển thị lỗi qua hệ thống dịch ngôn ngữ
-      if (!emailInput) emailRef.current?.focus(); // Focus vào trường bị bỏ trống
+      setError(t("Email or password does not valid")); 
+      if (!emailInput) emailRef.current?.focus(); 
       else passwordRef.current?.focus();
       return;
     }
 
-    // Kiểm tra định dạng email
+   
     if (!emailInput.includes("@")) {
       setError(t("Enter a valid email"));
-      emailRef.current?.focus(); // Focus vào trường email khi lỗi định dạng
+      emailRef.current?.focus(); 
       return;
     }
 
-    // Kiểm tra độ dài mật khẩu
+   
     if (passwordInput.length < 6) {
       setError(t("Password must be at least 6 characters"));
-      passwordRef.current?.focus(); // Focus vào trường mật khẩu khi ngắn quá
+      passwordRef.current?.focus(); 
       return;
     }
 
-    setError(""); // Xóa lỗi nếu thông tin hợp lệ
-    setLoading(true); // Bắt đầu trạng thái loading
+    setError(""); 
+    setLoading(true); 
 
     try {
-      // Gửi yêu cầu đăng nhập tới API
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -86,15 +85,15 @@ export const LoginForm = () => {
         const errorData = await response.json();
         setError(errorData.message || t("An unexpected error occurred"));
       } else {
-        // Đăng nhập thành công
+     
         setError("");
-        router.push("/dashboard"); // Chuyển hướng tới dashboard hoặc trang khác
+        router.push("/dashboard"); 
       }
     } catch (error) {
       console.error("Login error:", error);
       setError(t("An unexpected error occurred"));
     } finally {
-      setLoading(false); // Kết thúc trạng thái loading
+      setLoading(false); 
     }
   };
 
@@ -104,6 +103,7 @@ export const LoginForm = () => {
         <div className="relative inline-block">
           <button
             className="inline-flex items-center bg-white border border-gray-300 rounded px-2 py-1"
+            style={{ marginLeft: "200px" }}
             onClick={() => setDropdownOpen(!isDropdownOpen)}
           >
             <span
@@ -164,7 +164,7 @@ export const LoginForm = () => {
         </div>
       }
       backButtonLabel={<img src="/images/logoVitabi.png" className="w-16 h-10" />}
-      backButtonHref="/" // Đường dẫn quay lại trang chủ hoặc trang trước
+      backButtonHref="/" 
       showCloseButton={false}
     >
       <div className="flex flex-col items-center px-4">
@@ -180,27 +180,27 @@ export const LoginForm = () => {
           {t("Login")}
         </h2>
 
-        {/* Hiển thị thông báo lỗi nếu có */}
+        
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
         <form onSubmit={handleSubmit} className="w-full space-y-6">
           <div className="space-y-4">
-            {/* Trường nhập email */}
+            
             <div>
               <Input
                 name="email"
-                ref={emailRef} // Thêm ref để focus khi có lỗi
+                ref={emailRef} 
                 type="email"
                 placeholder={t("Enter email")}
                 className="w-full h-12"
               />
             </div>
 
-            {/* Trường nhập mật khẩu */}
+            
             <div>
               <Input
                 name="password"
-                ref={passwordRef} // Thêm ref để focus khi có lỗi
+                ref={passwordRef} 
                 type="password"
                 placeholder={t("Enter password")}
                 className="w-full h-12"
@@ -208,15 +208,15 @@ export const LoginForm = () => {
             </div>
           </div>
 
-          {/* Nút đăng nhập, hiển thị trạng thái loading khi chờ phản hồi */}
+          
           <Button
             type="submit"
             className="w-full bg-black text-white py-2 rounded-md h-12"
-            disabled={loading} // Vô hiệu hóa nút trong khi đang loading
+            disabled={loading} 
           >
             {loading ? (
               <div className="flex items-center justify-center">
-                {/* Hiển thị hiệu ứng spinner khi đang xử lý */}
+               
                 <svg className="animate-spin h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 01-8 8v-8H4z"></path>
@@ -229,7 +229,7 @@ export const LoginForm = () => {
           </Button>
         </form>
 
-        {/* Đường dẫn đến trang đăng ký nếu chưa có tài khoản */}
+        
         <p className="text-center mt-4">
           {t("Don't have an account?")}{" "}
           <Link

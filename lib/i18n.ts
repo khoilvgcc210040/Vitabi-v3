@@ -12,6 +12,16 @@ i18n.use(initReactI18next).init({
         "Register": "Register",
         "Don&apos;t have an account?": "Don't have an account?",
         "Sign up": "Sign up",
+        // MyData related
+        "My data": "My data",
+        "Profile": "Profile",
+        "Insurance": "Insurance",
+        "Medical Information": "Medical Information",
+        "Saved Hospitals": "Saved Hospitals",
+        "Password and Security": "Password and Security",
+        "Setting": "Setting",
+        "Vitabi Admin": "Vitabi Admin",
+        "Change Password": "Change Password"
       }
     },
     jp: {
@@ -23,6 +33,16 @@ i18n.use(initReactI18next).init({
         "Register": "登録",
         "Don&apos;t have an account?": "アカウントをお持ちではありませんか？",
         "Sign up": "登録",
+        // MyData related
+        "My data": "マイデータ",
+        "Profile": "プロフィール",
+        "Insurance": "保険",
+        "Medical Information": "医療情報",
+        "Saved Hospitals": "保存された病院",
+        "Password and Security": "パスワードとセキュリティ",
+        "Setting": "設定",
+        "Vitabi Admin": "Vitabi 管理者",
+        "Change Password": "パスワードを変更する"
       }
     },
     vi: {
@@ -34,11 +54,21 @@ i18n.use(initReactI18next).init({
         "Register": "Đăng ký",
         "Don&apos;t have an account?": "Chưa có tài khoản?",
         "Sign up": "Đăng ký",
+        // MyData related
+        "My data": "Dữ liệu của tôi",
+        "Profile": "Hồ sơ",
+        "Insurance": "Bảo hiểm",
+        "Medical Information": "Thông tin y tế",
+        "Saved Hospitals": "Bệnh viện đã lưu",
+        "Password and Security": "Mật khẩu và bảo mật",
+        "Setting": "Cài đặt",
+        "Vitabi Admin": "Quản trị Vitabi",
+        "Change Password": "Đổi mật khẩu"
       }
     },
   },
-  lng: "en", 
-  fallbackLng: "en", 
+  lng: "en",
+  fallbackLng: "en",
   interpolation: {
     escapeValue: false, 
   },

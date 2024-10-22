@@ -31,9 +31,12 @@ export const CardWrapper = ({
           className="flex justify-between items-center  border-b border-gray-400 p-4"
           style={{ borderBottom: "2px solid #d4d4d4" }}
         >
-          <Link href={backButtonHref} className="text-xl" style={{ transform: 'rotate(180deg)' }}>
-          ➜
+          {backButtonLabel && (
+          <Link href={backButtonHref} className="text-xl">
+          
+          {backButtonLabel}
           </Link>
+          )}
           <h2 className="text-lg flex-grow text-center font-semibold">{headerLabel}</h2>
           {showCloseButton && (
             <Link href="/auth/login" className="text-xl">
