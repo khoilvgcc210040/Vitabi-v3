@@ -72,6 +72,36 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+  
+  .country-selector select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    border: none; 
+    width: 100%; 
+    padding: 8px; 
+    font-size: 1rem; 
+    outline: none;
+  }
+  
+  .country-selector {
+    position: relative;
+    border: 1px solid #d1d5db; 
+    border-radius: 0.375rem; 
+    padding: 0; 
+    overflow: hidden; 
+  }
+  
+  .country-selector:focus-within {
+    border-color: #3b82f6; 
+  }
+  
+
+.country-selector select::-ms-expand {
+  display: none; 
+}
+
 }
 
 @layer base {

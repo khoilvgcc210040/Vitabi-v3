@@ -120,7 +120,7 @@ const MyData = () => {
           
 
           
-          <Link href="/insurance">
+          <Link href="/users/insurance">
             <div className="border py-2 cursor-pointer hover:scale-95 transition-transform duration-200">
               <div className="px-6 font-semibold text-base">{t("Insurance")}</div>
               <div className="px-6 text-base">Others</div>
@@ -128,7 +128,7 @@ const MyData = () => {
           </Link>
 
           
-          <Link href="/medical-information">
+          <Link href="/users/medicalinfo">
             <div className="border py-2 cursor-pointer hover:scale-95 transition-transform duration-200">
               <div className="px-6 font-semibold text-base">
                 {t("Medical Information")}
