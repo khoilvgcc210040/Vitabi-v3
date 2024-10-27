@@ -51,7 +51,7 @@ const MyData = () => {
                   } mr-2`}
                 ></span>
                 <span>
-                  {language === "en" ? "EN" : language === "jp" ? "日本語" : "VN"}
+                  {language === "en" ? "EN" : language === "jp" ? "JP" : "VN"}
                 </span>
                 <svg
                   className="ml-2 w-4 h-4"

@@ -20,24 +20,25 @@ export const CardWrapper = ({
   showCloseButton = true,
 }: CardWrapperProps) => {
   return (
-    <div className="flex justify-center items-start bg-white">
+    <div className="flex justify-center items-start bg-white min-h-screen">
       {/* Card Container */}
       <div
-        className="flex flex-col border max-w-md w-full bg-white min-h-[720px] sm:min-h-[695px] flex-grow"
+        className="flex flex-col border max-w-md w-full bg-white min-h-screen flex-grow"
         style={{ border: "2px solid #d4d4d4" }}
       >
         {/* Header */}
         <div
-          className="flex justify-between items-center  border-b border-gray-400 p-4"
+          className="flex justify-between items-center border-b border-gray-400 p-4"
           style={{ borderBottom: "2px solid #d4d4d4" }}
         >
           {backButtonLabel && (
-          <Link href={backButtonHref} className="text-xl">
-          
-          {backButtonLabel}
-          </Link>
+            <Link href={backButtonHref} className="text-xl">
+              {backButtonLabel}
+            </Link>
           )}
-          <h2 className="text-lg flex-grow text-center font-semibold">{headerLabel}</h2>
+          <h2 className="text-lg flex-grow text-center font-semibold">
+            {headerLabel}
+          </h2>
           {showCloseButton && (
             <Link href="/auth/login" className="text-xl">
               ✖
@@ -45,20 +46,27 @@ export const CardWrapper = ({
           )}
         </div>
 
-        {/* Avatar Image */}
-
-        <Card className="w-full">
-        <CardContent style={{ maxHeight: '520px', overflowY: 'scroll', msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+        {/* Content */}
+        <Card className="w-full flex-grow">
+          <CardContent
+            style={{
+              maxHeight: "520px",
+              overflowY: "scroll",
+              msOverflowStyle: "none",
+              scrollbarWidth: "none",
+            }}
+          >
             {children}
           </CardContent>
         </Card>
 
+        
         <footer
-          className="flex justify-around w-full p-4"
+          className="flex justify-around w-full p-4 mt-auto"
           style={{ marginTop: "auto", borderTop: "2px solid #d4d4d4" }}
         >
           <Link
-            href="/"
+            href="/homepage"
             className="nav-link flex flex-col items-center"
             style={{ width: "70px" }}
           >
