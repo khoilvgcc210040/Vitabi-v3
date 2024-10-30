@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { CardWrapper } from "./card-wrapper";
+import Link from "next/link";
 
 interface HospitalCardProps {
   id: number;
@@ -71,13 +72,18 @@ const HospitalCard: React.FC<HospitalCardProps> = ({
 
           {directBillingAvailable && (
             <div className="flex items-center justify-between mt-2">
-              <span className="text-blue-800 cursor-pointer" style={{fontSize: "15px"}}>
+              <span
+                className="text-blue-800 cursor-pointer"
+                style={{ fontSize: "15px" }}
+              >
                 Direct Billing Available
               </span>
               <button
                 onClick={toggleLike}
                 className={`w-8 h-8 flex items-center justify-center border bg-gray-200 rounded-full transition-colors duration-300 ${
-                  isLiked ? "bg-gray-300 hover:bg-gray-300" : "hover:bg-gray-300"
+                  isLiked
+                    ? "bg-gray-300 hover:bg-gray-300"
+                    : "hover:bg-gray-300"
                 }`}
               >
                 {isLiked ? (
@@ -205,7 +211,10 @@ const HospitalList: React.FC = () => {
             </div>
           )}
         </div>
-        <button className="ml-2 px-4 py-1 border-2 border-black rounded flex items-center hover:bg-gray-300">
+        <Link
+          href="/findhospital/filterhospital"
+          className="ml-2 px-4 py-1 border-2 border-black rounded flex items-center hover:bg-gray-300"
+        >
           Filter
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -219,7 +228,7 @@ const HospitalList: React.FC = () => {
               d="M1.5 1a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.146.354L10 9.207V13a1 1 0 0 1-.553.894l-2 1A1 1 0 0 1 6 14v-4.793l-3.854-5.853A.5.5 0 0 1 2.5 3V1z"
             />
           </svg>
-        </button>
+        </Link>
       </div>
 
       <div className="flex flex-col items-center px-4">
