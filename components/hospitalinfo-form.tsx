@@ -5,12 +5,12 @@ import Link from "next/link";
 import { CardWrapper } from "@/components/card-wrapper";
 import ReactCountryFlag from "react-country-flag";
 
-// Component hiển thị đánh giá sao với kiểu cho `rating`
+
 const StarRating = ({ rating }: { rating: number }) => {
   const stars = Array.from({ length: 5 }, (_, index) => {
     const starValue = index + 1;
     if (rating >= starValue) {
-      // Ngôi sao đầy
+  
       return (
         <svg
           key={index}
@@ -22,7 +22,7 @@ const StarRating = ({ rating }: { rating: number }) => {
         </svg>
       );
     } else {
-      // Ngôi sao rỗng
+     
       return (
         <svg
           key={index}
@@ -414,9 +414,11 @@ export const HospitalInfo = () => {
         }}
       >
         <p className="text-gray-500 text-l">Japanese Available</p>
+        <Link href="/book1">
         <button className="bg-black text-white px-5 py-3 rounded text-base font-semibold">
           Book now
         </button>
+        </Link>
       </div>
     </CardWrapper>
   );

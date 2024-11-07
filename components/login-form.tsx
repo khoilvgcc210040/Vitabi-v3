@@ -5,39 +5,39 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CardWrapper } from "@/components/card-wrapper";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Sử dụng router để điều hướng
+import { useRouter } from "next/navigation"; 
 import { useTranslation } from "react-i18next";
-import i18n from "@/lib/i18n"; // Import file i18n
-import "flag-icon-css/css/flag-icons.min.css"; // Import flag-icon-css
+import i18n from "@/lib/i18n"; 
+import "flag-icon-css/css/flag-icons.min.css"; 
 
 export const LoginForm = () => {
-  const [error, setError] = useState<string>(""); // State để lưu thông báo lỗi
-  const [loading, setLoading] = useState<boolean>(false); // State cho trạng thái loading
+  const [error, setError] = useState<string>(""); 
+  const [loading, setLoading] = useState<boolean>(false); 
   const { t } = useTranslation();
-  const router = useRouter(); // Router để chuyển hướng sau khi login thành công
+  const router = useRouter(); 
 
   const [language, setLanguage] = useState<string>("en");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-  // Ref cho các input để focus khi có lỗi
+ 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  // Thay đổi ngôn ngữ
+
   const handleLanguageChange = (lang: string) => {
     setLanguage(lang);
     i18n.changeLanguage(lang);
     setDropdownOpen(false);
   };
 
-  // Cập nhật thông báo lỗi mỗi khi ngôn ngữ thay đổi
+
   useEffect(() => {
     if (error) {
       setError(t("Email or password does not valid"));
     }
-  }, [language, error, t]); // Theo dõi ngôn ngữ và error
+  }, [language, error, t]); 
 
-  // Hàm xử lý submit form đăng nhập
+ 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
